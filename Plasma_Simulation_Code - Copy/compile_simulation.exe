@@ -1,0 +1,1 @@
+g++ -O3 particleVec.cpp boundary.cpp particle.cpp fields.cpp collisions.cpp e_collisions.cpp ion_collisions.cpp graphs.cpp pic.cpp main.cpp -o run_simulation

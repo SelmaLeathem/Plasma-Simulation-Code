@@ -1,0 +1,53 @@
+//Electron collision cross-section methods are implemented here
+
+/*
+ * Implementation Notes: sigma_H_elastic
+ * --------------------------------------
+ * Calculates the electron-Hydrogen energy dependent cross-section for
+ * energies in the range: threshold to 1 keV. The formulae are a collection
+ * excel data fits to data found in the Aladin Database.
+ *
+ */
+double e_collisions::sigma_H_elastic(void){
+   double sigma;
+
+   if(energy < 1.0e-2) //not sure if extrapolation is correct
+
+     sigma= 3.834*pow(energy,2.0)-20.82*energy + 40.98;
+
+   else if(energy >= 1.0e-2 && energy <20.0)
+
+     sigma= -6.15*log(energy) + 20.91;
+
+   else if(energy >= 20.0)  //strictly only valid up to 1000 eV
+
+     sigma= 102.2*pow(energy,-1.19);
+
+   return (fabs(sigma*1.0e-20));
+}
+
+/*
+ * Implementation Notes: sigma_H_ionize
+ * ---------------------------------------
+ * Calculates the electron-Argon energy dependent cross-section for
+ * energies in the range: threshold to 10 keV. The formulae are from:
+ * -R K Janev et al, Atomic and Plasma-Material Interaction Data for Fusion,
+ * vol 4,(1993)
+ */
+double e_collisions::sigma_H_ionize(void){
+   double sigma;
+   double I=13.6,I_E=energy/I,C=(1.0-(1.0/I_E));
+   double A=0.18450,B1=-0.032226,B2=-0.034539,B3=1.4003,B4=-2.8115,B5=2.2986;
+
+    if(energy < I)
+
+       sigma = 0.0;
+
+    else if(energy >=I) //valid up to 1e4
+
+       sigma=(1.0/(I*energy))*(A*log(I_E)+B1*C+B2*pow(C,2.0)
+                                      +B3*pow(C,3.0)+B4*pow(C,4.0)+B5*pow(C,5.0));
+
+    return fabs(sigma*1.0e-17);
+}
+

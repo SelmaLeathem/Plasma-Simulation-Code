@@ -1,0 +1,50 @@
+//Place boundary yield method implementations here.
+
+/*
+ * Implementation Notes: e_impact_see_yield_v
+ * -------------------------------------------
+ * Implement Vaughan model used in Xoopic. See also:
+ *   -M Radmilovic-Radjenovic et al , Journal of Physics: Conference Series 71
+ *    (2007) 012007
+ *   -J Rodney M Vaughan, IEEE Transaction on Electron Devices,Vol 36,(1989)
+ *    1963
+ *
+ */
+void boundary::e_impact_see_yield_v(void){
+   double w;
+   double twoPi=2.0*PI;
+   double v= (energy - E0)/(Emax0 - E0);
+   double kconst = (v>1) ? 0.25:0.62;
+
+   w = (energy-E0)/(Emax0*(1.0 + kconst*(angle*angle/twoPi) ) - E0);
+   yield = max_yield*(1.0 + kconst*(angle*angle/twoPi) )*pow((w*exp((1.0-w)) ),kconst);
+}
+
+/*
+ * Implementation Notes: i_impact_see_yield_Ar
+ * ---------------------------------------------
+ * Ion impact secondary electron yield for Argon ions impinging a dirty surface.
+ * See Also:
+ *   -M Radmilovic-Radjenovic et al, Eur. Phys. J. D,Vol 54,(2009),445
+ *
+ */
+void boundary::i_impact_see_yield_Ar(void){
+     yield=0.0;
+     if (energy >= 80.0){
+          yield = 0.006*energy/(1.0 + (energy/10.0)) +
+                1.05e-4*(sqrt((energy-80.0))/(1.0 + pow((energy/8000.0),1.5)));
+     }
+}
+
+void boundary::calc_reflection_yield_v(void){
+     reflection_yield = 0.0;
+     if(energy > 50.0 )
+         reflection_yield = 0.1*yield;
+}
+
+void boundary::calc_backscatter_yield_v(void){
+      backscatter_yield = 0.0;
+      if(energy > 50.0 )
+          backscatter_yield= 0.1*yield;
+}
+

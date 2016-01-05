@@ -1,0 +1,119 @@
+PREREQUISITES
+   None, although a knowledge of C/C++ syntax would be helpful. However, example
+   input functions are provided and are largely intuitive to follow.
+
+   Note: This was developed using GNU C++ and has not been tested in Visual
+   Studio.
+
+RUN SIMULATION
+   This is done in two easy steps:
+      1) Execute the compile_simulation script by entering the following on 
+         the command line: ./compile_simulation.exe
+      2) Run the resulting executable by typing ./run_simulation.exe	
+
+SIMULATION INPUT FILES
+   Simulation input parameter files are currently housed in the input_files
+   folder. Several examples are in the examples folder. Input files include:
+      1) parameters.h:
+            This holds basic parameters such as the gas pressure, time-step,
+            and system length. This file also includes user options such as
+            the maximum allowable number of ionization events per time-step.
+            Most defintions are mandatory.
+      2) input
+            Particle parameters are initialized here. For example, if there
+            is one ion species then the input file defines ions[0].set_vt(VTI).
+            If the user specified, say, three ion species in the parameters.h
+            file then the thermal velocity for each species is initialized
+            using ions[0].set_vt(VTI),ions[1].set_vt(VTI2),ions[2].set_vt(VTI3),
+            where the thermal velocities are defined in the parameters.h file.
+      3) constants.h
+            This file holds constants and should not be touched.
+      4) e_coll_input_declare
+            User defined electron collision cross-sections are declared here
+            using C++ syntax.  There are currently two examples in the file.
+            The functions are expected to take no arguements and return the 
+            cross-section value corresponding to the energy at that time.
+      5) e_coll_input_methods
+            User defined functions that calculate energy dependent electron
+            collision cross-sections in C++ are entered here. There are   
+            currently two examples. Users have access to the energy variable,
+            which holds the energy of the current particle being considered
+            for a collision.
+      6) ion_coll_input_declare
+            User defined electron collision cross-sections are declared here
+            using C++ syntax.  There are currently two examples in the file.
+            The functions are expected to take no arguements and return the 
+            cross-section value corresponding to the energy at that time.
+      7) ion_coll_input_methods
+            User defined functions that calculate energy dependent electron
+            collision cross-sections in C++ are entered here. There are   
+            currently two examples. Users have access to the energy variable,
+            which holds the energy of the current particle being considered
+            for a collision.
+      8) boundary_input_declare 
+            User defined electron-reflection, electron-backscattering,
+            electron-impact secondary electron, and ion-impact secondary
+            electron yield functions are declared here using C++ syntax. 
+            There are currently examples in the file.
+      9) boundary_input_methods 
+            User defined electron-reflection, electron-backscattering,
+            electron-impact secondary electron, and ion-impact secondary
+            electron yield functions are entered here using C++ syntax. 
+            There are currently examples in the file.
+       
+RESULTS
+   Textfiles holding output data to be used by data-visualization applications
+   are sent to the same directory as the executable. Example output can be found
+   in the output* folders in the Simulation_Examples directory. Output is not
+   labelled and includes:
+
+      density_*.txt for each species: x (m) ,charge_density/qc  
+
+         qc in the graph file is user defined via graph_object.set_qc(value),
+         For particle densities set qc=particle_charge, and for charge densities         set it to 1.0.
+      
+      first_v_dist_*.txt for each species: Particle velocity distribution   
+
+         The cells from which particle velocities are taken are selected by the
+         user. Graphs::spread is the number of cells from which to take values
+         from and graphs::location is the position of the central cell. These
+         values are currently set via set functions as is demonstrated in the
+         example input file. 
+         Velocities are normalized to vt via graph_object.set_vt(value).
+
+      second_v_dist_*.txt for each species: Particle velocity distribution   
+
+         The cells from which particle velocities are taken are selected by the
+         user. Graphs::spread is the number of cells from which to take values
+         from and graphs::location2 is the position of the central cell. These
+         values are currently set via set functions as is demonstrated in the
+         example input file. 
+         Velocities are normalized to vt via graph_object.set_vt(value).
+
+      x_velocity_* for each species: x (m), average cell velocity (m/s)
+
+      rho_phi_Egrid.txt: x (m), rho (C/m^3), Electric-field (V/m), phi (V)
+
+      timeData.txt: time-step,electron particle number, ion species particle
+                    numbers, electrostatic-potential at point 1, electrostatic-
+                    potential at point 2, electrostatic potential at point3,
+                    electron charge density at point3, ion charge density at 
+                    point3.
+
+         Points are selected by the user by defining POINT1, POINT2, POINT3 in
+         the parameters.h file in the input_files.
+          
+
+OUTPUT
+   At the end of a simulation particle data for each species is dumped to 
+   textfiles in the same directory. These can be used to start a new simulation
+   where the old one left off by setting RESTART to true in the parameters.h
+   file.
+
+EXAMPLES
+   Examples are in the Simulation_Examples folder. To run a simulation copy the 
+   folder to the same working directory as the executable, rename the folder to
+   input_files and run the simulation. 
+
+   
+   
