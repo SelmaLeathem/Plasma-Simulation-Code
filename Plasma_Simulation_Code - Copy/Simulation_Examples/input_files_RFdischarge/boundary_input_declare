@@ -1,7 +1,0 @@
-//Place boundary yield method declarations here.
-
-     void e_impact_see_yield_v(void);
-     void i_impact_see_yield_Ar(void);
-     void calc_reflection_yield_v(void);
-     void calc_backscatter_yield_v(void);
-

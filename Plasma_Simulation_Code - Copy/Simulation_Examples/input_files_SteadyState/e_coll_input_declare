@@ -1,5 +1,0 @@
-//Electron collision cross-section methods are declared here.
-
-     double sigma_H_elastic(void);
-     double sigma_H_ionize(void);
-
