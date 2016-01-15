@@ -69,7 +69,7 @@ void e_collisions::calc_energy(double vx,double vy,double vz){
  * or zero before passing this method to the set_crossSec_elastic method.
  *
  * e.g. 
- * object.set_constant_elastic(0.0);
+  * object.set_constant_elastic(0.0);
  * object.set_crossSec_elastic(&e_collisions::sigma_const_elastic);
  */
 double e_collisions::sigma_const_elastic(void){
@@ -81,14 +81,20 @@ double e_collisions::sigma_const_elastic(void){
  * --------------------------------------------- 
  * For a constant value or no collision need to set constant_ionization to a 
  * value or zero before passing this method to the set_crossSec_ionization
- * method.
+ * method. If use this option then need to also initialize the threshold variable,
+ * even if only to zero. 
  *
  * e.g. 
+ * object.set_ionization_threshold(THRESHOLD);
  * object.set_constant_ionization(1.0e-20);
  * object.set_crossSec_ionization(&e_collisions::sigma_const_ionization)
  */
 double e_collisions::sigma_const_ionization(void){
+      double zero=0.0, offset=1.0e-6;
+      if(energy > threshold && threshold > offset )
         return constant_ionization;
+      else
+        return zero;
 }
 
 /*
