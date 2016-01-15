@@ -121,8 +121,10 @@ ion_collision[0].set_crossSec_CX(&ion_collisions::sigma_Ar_cx);
     user defined functions
      For a constant value or no collisions need to set constant_elastic or
      constant_ionization = value or zero then pass the sigma_const_elastic()
-     or sigma_const_ionization() method to the function pointer.
-
+     or sigma_const_ionization() method to the function pointer. If use a 
+     constant ionization cross-section then must set the ionization 
+     threshold variable to some value, even if only zero
+     via: e_collision[i].set_ionization_threshold(THRESHOLD);
 */
 
 e_collision[0].set_crossSec_elastic(&e_collisions::sigma_Ar_elastic);
